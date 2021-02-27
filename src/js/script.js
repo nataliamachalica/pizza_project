@@ -101,6 +101,7 @@
       thisProduct.initOrderForm();
       thisProduct.initAmountWidget();
       thisProduct.processOrder();
+      thisProduct.prepareCartProductParams();
 
       console.log('new Product:', thisProduct);
     }
@@ -181,6 +182,7 @@
         thisProduct.element.classList.toggle('active');
       });
     }
+
     initOrderForm(){
       const thisProduct = this;
 
@@ -200,9 +202,10 @@
       thisProduct.cartButton.addEventListener('click', function(event){
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCart();
       });
-
     }
+
     processOrder(){
       const thisProduct = this;
 
@@ -269,8 +272,68 @@
       // multiply price by amount
       price *= thisProduct.amountWidget.value;
 
+      // price for cart
+      thisProduct.priceSingle = price;
+
       // update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
+    }
+
+    addToCart(){
+      const thisProduct = this;
+
+      app.cart.add(thisProduct.prepareCartProduct());
+
+    }
+
+    prepareCartProduct(){
+      const thisProduct = this;
+
+      const productSummary = {
+        id: thisProduct.id,
+        name: thisProduct.data.name,
+        amount: thisProduct.amountWidget.value,
+        priceSingle: thisProduct.priceSingle,
+        price: thisProduct.priceSingle * thisProduct.amountWidget.value,
+        params: thisProduct.prepareCartProductParams(),
+      };
+      return productSummary;
+    }
+
+    prepareCartProductParams(){
+
+      const thisProduct = this;
+
+      // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
+
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      const params = {};
+
+      // for every category (param)...
+
+      for(let paramId in thisProduct.data.params) {
+        // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
+        const param = thisProduct.data.params[paramId];
+        // create category param in params const eg. params = { ingredients: { name: 'Ingredients', options: {}}}
+
+        params[paramId] = {
+          name: param.label,
+          options: {}
+        };
+
+        // for every option in this category
+        for(let optionId in param.options){
+          // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
+          const option = param.options[optionId];
+          // check if there is param with a name of paramId in formData and if it includes optionId
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+
+          if(optionSelected){
+            params[paramId].options[optionId] = option.label;
+          }
+        }
+      }
+      return params;
     }
   }
 
@@ -331,6 +394,7 @@
         thisWidget.setValue(thisWidget.value +1);
       });
     }
+
     announce(){
       const thisWidget = this;
 
@@ -350,6 +414,23 @@
       console.log('newCart', thisCart);
     }
 
+    add(menuProduct){
+      const thisCart = this;
+
+      // generate HTML based on templates
+
+      const generatedHTML = templates.menuProduct(menuProduct.data);
+
+      // create dom element
+
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+
+      //add element
+
+      thisCart.dom.productList.appendChild(generatedDOM);
+
+    }
+
     getElements(element){
       const thisCart = this;
 
@@ -357,6 +438,7 @@
 
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
     }
 
     initActions(){
