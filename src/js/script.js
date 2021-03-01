@@ -393,6 +393,7 @@
       cartContainer.appendChild(generatedDOM);
 
       thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
+
       thisCart.update();
     }
 
@@ -407,9 +408,6 @@
         subTotalPrice = parseInt(subTotalPrice) + parseInt(product.price);
       }
       thisCart.totalPrice = subTotalPrice + deliveryFee;
-      console.log('totalNumber', totalNumber);
-      console.log('subtotalPrice', subTotalPrice);
-      console.log('thisCart totalPrice', thisCart.totalPrice);
       thisCart.dom.subTotalPrice.innerHTML = subTotalPrice;
       thisCart.dom.totalNumber.innerHTML = totalNumber;
       thisCart.dom.totalPrice.innerHTML = thisCart.totalPrice;
