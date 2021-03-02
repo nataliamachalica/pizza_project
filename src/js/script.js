@@ -402,20 +402,28 @@
     update(){
 
       const thisCart = this;
-      const deliveryFee = settings.cart.defaultDeliveryFee;
-      let totalNumber = 0;
-      let subTotalPrice = 0;
+      thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
+      thisCart.totalNumber = 0;
+      thisCart.subTotalPrice = 0;
 
       for (let product of thisCart.products){
-        totalNumber = parseInt(totalNumber) + parseInt(product.amount);
-        subTotalPrice = parseInt(subTotalPrice) + parseInt(product.price);
+        thisCart.totalNumber += product.amount;
+        thisCart.subTotalPrice += product.price;
+      }if(thisCart.subtotalPrice != 0){
+        thisCart.totalPrice = thisCart.deliveryFee + thisCart.subtotalPrice;
       }
 
-      thisCart.totalPrice = subTotalPrice + deliveryFee;
-      thisCart.dom.subTotalPrice.innerHTML = subTotalPrice;
-      thisCart.dom.totalNumber.innerHTML = totalNumber;
-      thisCart.dom.totalPrice.innerHTML = thisCart.totalPrice;
-      thisCart.dom.deliveryFee.innerHTML = deliveryFee;
+      thisCart.dom.deliveryFee.innerHTML = thisCart.deliveryFee;
+      thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
+      thisCart.dom.subTotalPrice.innerHTML = thisCart.subTotalPrice;
+
+      for(let price of thisCart.dom.totalPrice){
+        price.innerHTML = thisCart.totalPrice;
+      }
+
+      //thisCart.totalPrice = subTotalPrice + deliveryFee;
+      //thisCart.dom.totalPrice.innerHTML = thisCart.totalPrice;
+
     }
 
     remove(cartProduct){
