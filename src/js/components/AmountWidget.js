@@ -1,13 +1,17 @@
 import {settings, select} from '../settings.js';
+import BaseWidget from './BaseWidget.js';
 
-class AmountWidget{
+class AmountWidget extends BaseWidget{
   constructor(element){
+    super(element);//oznacza konstruktor klasy BaseWidget
 
     const thisWidget = this;
 
     thisWidget.getElements(element);
-    thisWidget.initActions();
+    thisWidget.value = settings.amountWidget.defaultValue;
     thisWidget.setValue(thisWidget.input.value);
+
+    thisWidget.initActions();
   }
 
   getElements(element){
