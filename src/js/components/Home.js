@@ -1,6 +1,6 @@
-class Home {
+/*class Home {
   constructor(wrapper){
-    
+
     const thisHome = this;
 
     thisHome.render();
@@ -17,4 +17,4 @@ class Home {
   }
 }
 
-export default Home;
+export default Home;*/
