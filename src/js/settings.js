@@ -55,6 +55,11 @@ export const select = {
     phone: '[name="phone"]',
     address: '[name="address"]',
   },
+  home: {
+    orderButton: '.order-online',
+    bookButton: '.book-a-table',
+    openingHours: '.opening-hours',
+  },
   cartProduct: {
     amountWidget: '.widget-amount',
     price: '.cart__product-price',
