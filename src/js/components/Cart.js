@@ -22,8 +22,10 @@ class Cart{
     thisCart.dom.wrapper = element;
     thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
     thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
+
+
     thisCart.dom.deliveryFee = thisCart.dom.wrapper.querySelector(select.cart.deliveryFee);
-    thisCart.dom.subTotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subTotalPrice);
+    thisCart.dom.subtotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subtotalPrice);
     thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
     thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelectorAll(select.cart.totalNumber);
 
@@ -71,7 +73,7 @@ class Cart{
       address: thisCart.dom.address['value'],
       phone: thisCart.dom.phone['value'],
       totalPrice: thisCart.totalPrice,
-      subTotalPrice: thisCart.subTotalPrice,
+      subtotalPrice: thisCart.subtotalPrice,
       totalNumber: thisCart.totalNumber,
       deliveryFee: thisCart.deliveryFee,
       products: [],
@@ -99,11 +101,11 @@ class Cart{
     thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
 
     thisCart.totalNumber = 0;
-    thisCart.subTotalPrice = 0;
+    thisCart.subtotalPrice = 0;
 
     for (let product of thisCart.products){
       thisCart.totalNumber += product.amount;
-      thisCart.subTotalPrice += product.price;
+      thisCart.subtotalPrice += product.price;
     }
     if (thisCart.totalPrice !== 0) {
       thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
@@ -112,7 +114,7 @@ class Cart{
       thisCart.totalPrice = 0;
       thisCart.deliveryFee = 0;
     }
-    thisCart.totalPrice = thisCart.deliveryFee + thisCart.subTotalPrice;
+    thisCart.totalPrice = thisCart.deliveryFee + thisCart.subtotalPrice;
 
     for(let price of thisCart.dom.totalPrice){
       price.innerHTML = thisCart.totalPrice;
