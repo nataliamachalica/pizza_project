@@ -19,7 +19,12 @@
   text-transform: uppercase;
   letter-spacing: .1em;
 
-
+  /*
+  <div class="order-online">
+  <h2>order online</h2>
+  <p>Delicious food delivered to your door</p>
+  </div>
+  */
   h2 {
     font-size: 30px;
     margin: 20px 0 10px;
@@ -70,12 +75,16 @@
 
   .order-online:hover {
     h2 {
-      transition: linear .30s;
+      transform: translateY(-35px);
+      opacity: 1;
+      transition: 0.5s all;
     }
 
     p {
-      transition: linear .30s;
       visibility: visible;
+      transform: translateY(-33px);
+      opacity: 1;
+      transition: 0.5s all;
     }
   }
 
@@ -118,6 +127,7 @@
       opacity: 0.4;
       transition: all 0.3s;
     }
+
     .overlay{
       visibility: visible;
     }

@@ -24,10 +24,17 @@ class Cart{
     thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
 
 
-    thisCart.dom.deliveryFee = thisCart.dom.wrapper.querySelector(select.cart.deliveryFee);
+    /*thisCart.dom.deliveryFee = thisCart.dom.wrapper.querySelector(select.cart.deliveryFee);
     thisCart.dom.subtotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subtotalPrice);
     thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
-    thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelectorAll(select.cart.totalNumber);
+    thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelectorAll(select.cart.totalNumber);*/
+
+    thisCart.renderTotalKeys = ['totalNumber', 'totalPrice', 'subtotalPrice', 'deliveryFee'];
+
+    for(let key of thisCart.renderTotalKeys){
+      thisCart.dom[key] = thisCart.dom.wrapper.querySelectorAll(select.cart[key]);
+    }
+
 
     thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
     thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address);
@@ -107,18 +114,14 @@ class Cart{
       thisCart.totalNumber += product.amount;
       thisCart.subtotalPrice += product.price;
     }
-    if (thisCart.totalPrice !== 0) {
-      thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
-    }
-    else {
-      thisCart.totalPrice = 0;
-      thisCart.deliveryFee = 0;
-    }
-    thisCart.totalPrice = thisCart.deliveryFee + thisCart.subtotalPrice;
 
-    for(let price of thisCart.dom.totalPrice){
-      price.innerHTML = thisCart.totalPrice;
-    }//zliczanie ceny
+    thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
+
+    for(let key of thisCart.renderTotalKeys) {
+      for(let elem of thisCart.dom[key]){
+        elem.innerHTML = thisCart[key];
+      }
+    }
   }
 
   remove(cartProduct){

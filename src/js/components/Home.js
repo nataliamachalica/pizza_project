@@ -39,7 +39,7 @@ class Home {
       contain: true,
       autoPlay: true,
       prevNextButtons: false,
-      //wrapAround: true,
+      wrapAround: true,
     });
   }
 

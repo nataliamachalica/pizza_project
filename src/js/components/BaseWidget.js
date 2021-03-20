@@ -1,4 +1,5 @@
 class BaseWidget{
+
   constructor(wrapperElement, initialValue){
     const thisWidget = this;
 
@@ -8,7 +9,7 @@ class BaseWidget{
     thisWidget.correctValue = initialValue;
   }
 
-  get value(){ // get value jest getterem czyli metodą wykonywana przyk kazdej probieodczytania właściwoxsci  value
+  get value(){ // get value jest getterem czyli metodą wykonywana przyk kazdej probie odczytania właściwoxsci  value
     const thisWidget = this;
 
     return thisWidget.correctValue;
