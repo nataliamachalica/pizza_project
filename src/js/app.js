@@ -13,8 +13,6 @@ export const app = {
     thisApp.navLinks = document.querySelectorAll(select.nav.links);
 
     const idFromHash = window.location.hash.replace('#/', '');
-    //console.log('idFromHash:', idFromHash);
-
 
     let pageMatchingHash = thisApp.pages[0].id;
 
@@ -33,18 +31,10 @@ export const app = {
         const clickedElement = this;
         event.preventDefault();
 
-        /* get page id from href attribute */
         const id = clickedElement.getAttribute('href').replace('#', '');
 
-        // w stałej id chcemy zapisać atrybut 'href kliknietego
-        //elementu, w którym zamienimy # na pusty ciag znaków
-        // jesli zmienimy # na pusty ciag znaków to zostanie nam
-        //z #order lub #booking samo order lub booking
-
-        /* run thisApp.activatePage with that id */
         thisApp.activatePage(id);
 
-        /* change URL hash (koncowka adresu strony ktora zaczyna się od # */
         window.location.hash = '#/' + id;
       });
     }
@@ -53,19 +43,15 @@ export const app = {
   activatePage: function(pageId){
     const thisApp = this;
 
-    /* add class active to matching pages, remove from non matching */
-
     for(let page of thisApp.pages){
       page.classList.toggle(classNames.pages.active, page.id == pageId);
     }
-    /* add class active to matching links, remove from non matching */
     for(let link of thisApp.navLinks){
       link.classList.toggle(
         classNames.nav.active,
         link.getAttribute('href') == '#' + pageId
       );
     }
-
   },
 
   initMenu: function(){
@@ -73,14 +59,12 @@ export const app = {
 
     for(let productData in thisApp.data.products){
       new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
-      //(productData, thisApp.data.products[productData]);
     }
   },
 
   initData: function(){
     const thisApp = this;
 
-    //thisApp.data = dataSource;
     thisApp.data = {};
 
     const url = settings.db.url + '/' + settings.db.product;
@@ -90,14 +74,9 @@ export const app = {
         return rawResponse.json();
       })
       .then(function(parsedResponse){
-        //console.log('parsedResponse:', parsedResponse);
-        /* save parsedResponse at thisApp.data.products */
         thisApp.data.products = parsedResponse;
-        /* execute initMenu method */
         thisApp.initMenu();
       });
-
-    //console.log('thisApp.data', JSON.stringify(thisApp.data));
   },
 
   initCart: function(){
@@ -131,7 +110,6 @@ export const app = {
     const thisApp = this;
 
     thisApp.initData();
-    //thisApp.initMenu();
     thisApp.initCart();
     thisApp.initPages();
     thisApp.initBooking();

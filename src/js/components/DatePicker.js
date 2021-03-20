@@ -13,36 +13,26 @@ class DatePicker extends BaseWidget{
   initPlugin(){
     const thisWidget = this;
 
-    thisWidget.minDate = new Date(); //(thisWidget.value)
+    thisWidget.minDate = new Date();
     thisWidget.maxDate = utils.addDays(thisWidget.minDate, settings.datePicker.maxDaysInFuture);
     // eslint-disable-next-line no-undef
     flatpickr(thisWidget.dom.input, {
-      defaultDate: thisWidget.minDate, //ustawia aktualną date
-      minDate: thisWidget.minDate, // minimalna data = też dziś
-      maxDate: thisWidget.maxDate, // maksymalna data do wyboru - wartość z settings (14 = 14 dni naprzód)
+      defaultDate: thisWidget.minDate,
+      minDate: thisWidget.minDate,
+      maxDate: thisWidget.maxDate,
       locale: {
-        firstDayOfWeek: 1 //pierwszym dniem tygodnia zawsze będzie poniedziałek
+        firstDayOfWeek: 1
       },
       disable: [
         function(date) {
-          return (date.getDay() === 1); // nieczynne w poniedziałki
+          return (date.getDay() === 1);
         }
       ],
-      onChange: function(selectedDates, dateStr) { //callback - będzie uruchamiany, gdy plugin wykryje zmianę terminu.
-        thisWidget.value = dateStr; //wynikiem działania funkcji callback (onChange) jest zaktualizowanie thisWidget.value
+      onChange: function(selectedDates, dateStr) {
+        thisWidget.value = dateStr;
       },
     });
   }
-
-  //jeśli w klasie pochodnej jest taka metoda o
-  //takiej samej nazwie jak w klasie bazowej,
-  //to zawsze ważniejsza będzie ta, w klasie pochodnej.
-  //Ustawiając wiec nasze trzy własne metody parseValue,
-  //isValid i renderValue, po prostu zapewniamy sobie to,
-  //że setter w BaseWidget będzie uruchamiał w
-  //przypadku DatePicker właśnie je, a nie oryginały.
-  //Tym samym niczego nam nie popsuje, bo te nowe wersje
-  //metod są już dla nas bezpieczne.
 
   parseValue(value){
     return value;
