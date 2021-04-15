@@ -1,9 +1,9 @@
-import {select, classNames, templates} from '../settings.js';
+import {select, classNames, templates} from '../settings';
 import {utils} from '../utils.js';
 import AmountWidget from './AmountWidget';
 
 
-class Product{
+class Product {
   constructor(id, data){
 
     const thisProduct = this;

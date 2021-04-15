@@ -1,4 +1,4 @@
-class BaseWidget{
+class BaseWidget {
 
   constructor(wrapperElement, initialValue){
     const thisWidget = this;
@@ -9,13 +9,13 @@ class BaseWidget{
     thisWidget.correctValue = initialValue;
   }
 
-  get value(){ // get value jest getterem czyli metodą wykonywana przyk kazdej probie odczytania właściwoxsci  value
+  get value(){
     const thisWidget = this;
 
     return thisWidget.correctValue;
   }
 
-  set value(value){ // setter - metoda wykonywana przy kazdej próbie ustawienia nowej wartosci dla właciwosci value
+  set value(value){
     const thisWidget = this;
 
     const newValue = thisWidget.parseValue(value);
