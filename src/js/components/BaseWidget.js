@@ -59,3 +59,5 @@ class BaseWidget{
 }
 
 export default BaseWidget;
+
+
